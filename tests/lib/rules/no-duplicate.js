@@ -2,27 +2,27 @@
  * @fileoverview Checks for duplicate instances of the same module being required
  * @author Luka Prebil Grintal
  */
-"use strict";
+'use strict';
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 // Requirements
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
-var rule = require("../../../lib/rules/no-duplicate"),
+const rule = require('../../../lib/rules/no-duplicate');
 
-    RuleTester = require("eslint").RuleTester;
+const RuleTester = require('eslint').RuleTester;
 
 
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 // Tests
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
-var ruleTester = new RuleTester();
-ruleTester.run("no-duplicate", rule, {
+const ruleTester = new RuleTester();
+ruleTester.run('no-duplicate', rule, {
 
     valid: [
-        "mod = require('./mod');",
-        "mod = require('./mod'); mod2 = require('./mod2')"
+        'mod = require(\'./mod\');',
+        'mod = require(\'./mod\'); mod2 = require(\'./mod2\')',
     ],
 
     invalid: [
@@ -30,9 +30,9 @@ ruleTester.run("no-duplicate", rule, {
             code: `mod = require('./mod');
             mod2 = require('./mod');`,
             errors: [{
-                message: "Module './mod' has already been required in this file at line 1.",
-                type: "Identifier"
-            }]
+                message: 'Module \'./mod\' has already been required in this file at line 1.',
+                type: 'Identifier',
+            }],
         },
         {
             code: `mod = require('./mod');
@@ -42,12 +42,12 @@ ruleTester.run("no-duplicate", rule, {
             }
             mod2 = require('./mod');`,
             errors: [{
-                message: "Module './mod' has already been required in this file at line 1.",
-                type: "Identifier"
-            },{
-                message: "Module './mod' has already been required in this file at line 1.",
-                type: "Identifier"
-            }]
-        }
-    ]
+                message: 'Module \'./mod\' has already been required in this file at line 1.',
+                type: 'Identifier',
+            }, {
+                message: 'Module \'./mod\' has already been required in this file at line 1.',
+                type: 'Identifier',
+            }],
+        },
+    ],
 });
