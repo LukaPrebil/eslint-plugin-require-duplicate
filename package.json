@@ -7,6 +7,7 @@
     "eslintplugin",
     "eslint-plugin"
   ],
+  "repository": "https://github.com/LukaPrebil/eslint-plugin-require-duplicate",
   "author": "Luka Prebil Grintal",
   "main": "lib/index.js",
   "scripts": {
@@ -27,5 +28,5 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
