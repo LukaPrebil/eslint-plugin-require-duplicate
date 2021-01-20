@@ -7,8 +7,24 @@
     "eslintplugin",
     "eslint-plugin"
   ],
-  "repository": "https://github.com/LukaPrebil/eslint-plugin-require-duplicate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LukaPrebil/eslint-plugin-require-duplicate.git"
+  },
+  "homepage": "https://github.com/LukaPrebil/eslint-plugin-require-duplicate",
+  "bugs": {
+    "url": "https://github.com/LukaPrebil/eslint-plugin-require-duplicate/issues"
+  },
   "author": "Luka Prebil Grintal",
+  "directories": {
+    "doc": "./docs",
+    "lib": "./lib",
+    "test": "./tests"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha tests --recursive",
@@ -24,9 +40,5 @@
   },
   "peerDependencies": {
     "eslint": ">=0.8.0"
-  },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "license": "MIT"
+  }
 }
