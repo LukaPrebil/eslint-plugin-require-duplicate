@@ -1,5 +1,8 @@
 # CHANGELOG
 
+#### Unreleased
+
+* #2 - Now resolves modules and checks for duplicate imports of the resolved file, instead of just name
 ### 1.0.1
 
 Updated and filled out `package.json` metadata. Added this changelog.

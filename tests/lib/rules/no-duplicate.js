@@ -21,31 +21,63 @@ const ruleTester = new RuleTester();
 ruleTester.run('no-duplicate', rule, {
 
     valid: [
-        'mod = require(\'./mod\');',
-        'mod = require(\'./mod\'); mod2 = require(\'./mod2\')',
+        {
+            code: 'mod = require(\'../modules/mod\');',
+            filename: __filename,
+        },
+        {
+            code:
+            `mod = require(\'../modules/mod\');
+        stock = require(\'../modules/stock\')`,
+            filename: __filename,
+        },
     ],
 
     invalid: [
-        {
-            code: `mod = require('./mod');
-            mod2 = require('./mod');`,
+        { // Two identical requires
+            code:
+            `mod = require('../modules/mod');
+        mod2 = require('../modules/mod');`,
+            filename: __filename,
             errors: [{
-                message: 'Module \'./mod\' has already been required in this file at line 1.',
+                message: 'Module \'../modules/mod\' has already been required in this file at line 1.',
                 type: 'Identifier',
             }],
         },
-        {
-            code: `mod = require('./mod');
-            i = 0;
-            if (i > 1) {
-                mod = require('./mod');
-            }
-            mod2 = require('./mod');`,
+        { // Two identical requires of a core module
+            code:
+            `path = require('path');
+        pathAgain = require('path');`,
+            filename: __filename,
             errors: [{
-                message: 'Module \'./mod\' has already been required in this file at line 1.',
+                message: 'Module \'path\' has already been required in this file at line 1.',
+                type: 'Identifier',
+            }],
+        },
+        { // Catches multiples, even in conditionals
+            code:
+            `mod = require('../modules/mod');
+        i = 0;
+        if (i > 1) {
+            mod = require('../modules/mod');
+        }
+        mod2 = require('../modules/mod');`,
+            filename: __filename,
+            errors: [{
+                message: 'Module \'../modules/mod\' has already been required in this file at line 1.',
                 type: 'Identifier',
             }, {
-                message: 'Module \'./mod\' has already been required in this file at line 1.',
+                message: 'Module \'../modules/mod\' has already been required in this file at line 1.',
+                type: 'Identifier',
+            }],
+        },
+        { // Resolves module and catches duplicates. Github Issue #2
+            code:
+            `mod = require('../modules/mod');
+        mod2 = require('../../lib/modules/mod');`,
+            filename: __filename,
+            errors: [{
+                message: 'Module \'../../lib/modules/mod\' has already been required in this file at line 1.',
                 type: 'Identifier',
             }],
         },
