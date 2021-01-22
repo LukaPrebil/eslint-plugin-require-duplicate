@@ -12,6 +12,11 @@ const sameModule = require('./module')
 ```
 
 ```js
+const module = require('./module')
+const stillSameModule = require('../currentDir/module')
+```
+
+```js
 const { someFunction } = require('./module')
 const { someOtherFunction } = require('./module')
 ```
