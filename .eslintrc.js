@@ -12,6 +12,6 @@ module.exports = {
     },
     'rules': {
         'indent': ['error', 4],
-        'max-len': ['warn', 100],
+        'max-len': ['warn', 120],
     },
 };

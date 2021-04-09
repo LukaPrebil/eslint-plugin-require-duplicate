@@ -39,9 +39,16 @@ ruleTester.run('no-duplicate', rule, {
             `mod = require('../modules/mod');
         mod2 = require('../modules/mod');`,
             filename: __filename,
+            output: `mod = require('../modules/mod');\n`,
             errors: [{
                 message: 'Module \'../modules/mod\' has already been required in this file at line 1.',
                 type: 'Identifier',
+                suggestions: [
+                    {
+                        desc: 'Remove the duplicate require call.',
+                        output: `mod = require('../modules/mod');\n`,
+                    },
+                ],
             }],
         },
         { // Two identical requires of a core module
@@ -49,9 +56,16 @@ ruleTester.run('no-duplicate', rule, {
             `path = require('path');
         pathAgain = require('path');`,
             filename: __filename,
+            output: `path = require('path');\n`,
             errors: [{
                 message: 'Module \'path\' has already been required in this file at line 1.',
                 type: 'Identifier',
+                suggestions: [
+                    {
+                        desc: 'Remove the duplicate require call.',
+                        output: `path = require('path');\n`,
+                    },
+                ],
             }],
         },
         { // Catches multiples, even in conditionals
@@ -60,9 +74,17 @@ ruleTester.run('no-duplicate', rule, {
         i = 0;
         if (i > 1) {
             mod = require('../modules/mod');
+            i = 0;
         }
         mod2 = require('../modules/mod');`,
             filename: __filename,
+            output:
+            `mod = require('../modules/mod');
+        i = 0;
+        if (i > 1) {
+
+            i = 0;
+        }\n`,
             errors: [{
                 message: 'Module \'../modules/mod\' has already been required in this file at line 1.',
                 type: 'Identifier',
@@ -76,6 +98,7 @@ ruleTester.run('no-duplicate', rule, {
             `mod = require('../modules/mod');
         mod2 = require('../../lib/modules/mod');`,
             filename: __filename,
+            output: `mod = require('../modules/mod');\n`,
             errors: [{
                 message: 'Module \'../../lib/modules/mod\' has already been required in this file at line 1.',
                 type: 'Identifier',
